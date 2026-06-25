@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Governance Readiness — prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- The legal rules engine and the optional assistant each live in their own file. -->
+<script src="react.production.min.js"></script>
+<script src="react-dom.production.min.js"></script>
+<script src="engine.js"></script>
+<script src="assistant.js"></script>
+<style>
+  :root{
+    --ink:#14181f; --muted:#5c6672; --paper:#f5f6f8; --panel:#ffffff;
+    --line:#e3e6eb; --slate:#222c38; --slate-soft:#3a4756;
+    --clear:#1f7a52; --clear-bg:#e7f3ec;
+    --likely:#9a6206; --likely-bg:#fbf1df;
+    --unsettled:#5b3fc7; --unsettled-bg:#eee9fb;
+    --err:#b3261e;
+    --sans:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 80px}
+  a{color:var(--unsettled)}
+  /* header */
+  header.top{border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:26px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:30px;line-height:1.1;margin:8px 0 6px;font-weight:700;letter-spacing:-.01em}
+  .thesis{color:var(--slate-soft);max-width:62ch;margin:0}
+  .stamp{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:12px}
+  .stamp .asat{color:var(--unsettled)}
+  /* panels */
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:22px}
+  .panel h2{font-size:13px;font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 16px;font-weight:500}
+  /* form */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field.full{grid-column:1 / -1}
+  label{font-size:13px;font-weight:600;color:var(--slate)}
+  input,select{font-family:var(--sans);font-size:14px;padding:9px 11px;border:1px solid var(--line);
+    border-radius:7px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,button:focus-visible{outline:2px solid var(--unsettled);outline-offset:1px}
+  .row-btns{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+  button{font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;border-radius:7px;
+    padding:9px 16px;border:1px solid var(--slate);background:var(--slate);color:#fff;transition:filter .15s}
+  button:hover{filter:brightness(1.12)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  button.ghost{background:#fff;color:var(--slate);border-color:var(--line)}
+  button.small{padding:6px 12px;font-size:12.5px}
+  /* register */
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:middle}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  tr.clickable{cursor:pointer}
+  tr.clickable:hover td{background:#fafbfc}
+  tr.active td{background:#f4f2fb}
+  .empty{color:var(--muted);font-size:14px;padding:6px 2px}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  /* ladder */
+  .ladder{display:flex;gap:0;font-family:var(--mono);font-size:10.5px}
+  .ladder span{padding:2px 7px;border:1px solid var(--line);border-right:0;color:var(--muted);background:#fff}
+  .ladder span:last-child{border-right:1px solid var(--line)}
+  .ladder span.on{background:var(--slate);color:#fff;border-color:var(--slate)}
+  /* chips */
+  .chip{display:inline-block;font-family:var(--mono);font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .chip.clear{background:var(--clear-bg);color:var(--clear)}
+  .chip.likely{background:var(--likely-bg);color:var(--likely)}
+  .chip.unsettled{background:var(--unsettled-bg);color:var(--unsettled)}
+  .chip.none{background:#eef0f3;color:var(--muted)}
+  /* detail */
+  .detail{margin-top:18px;border-top:1px dashed var(--line);padding-top:18px}
+  .det{display:grid;grid-template-columns:170px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .det:last-child{border-bottom:0}
+  .det .basis{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px;line-height:1.45}
+  .det .basis a{color:var(--unsettled);text-decoration:none;white-space:nowrap}
+  .det .basis a:hover{text-decoration:underline}
+  .det .label{font-weight:600}
+  .draftbox{background:#fbfbfa;border:1px solid var(--line);border-left:3px solid var(--unsettled);
+    border-radius:6px;padding:14px 16px;margin-top:12px}
+  .draftbox .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--unsettled);font-weight:500}
+  .draftbox .draft-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .draftbox h4{margin:8px 0 6px;font-size:14px}
+  .draftbox p,.draftbox li{font-size:13.5px;color:var(--slate)}
+  .draftbox ul{margin:6px 0 0;padding-left:20px}
+  pre.dpia{white-space:pre-wrap;font-family:var(--mono);font-size:12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:12px;color:var(--ink)}
+  /* data-handling note */
+  .datanote{font-family:var(--mono);font-size:11px;color:var(--muted);background:#fbfbfa;border:1px dashed var(--line);
+    border-radius:6px;padding:8px 11px;margin-bottom:18px}
+  /* assistant */
+  .keyrow{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+  .keyrow .field{flex:1 1 320px}
+  .keyrow .field.modelf{flex:0 1 230px}
+  .assistant-actions{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px}
+  .assistant-actions .ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+  .assistant-actions .ctl .field{flex:1 1 280px}
+  .ai-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--clear);font-weight:500;margin-bottom:10px}
+  .aibox{background:#f4faf7;border:1px solid var(--line);border-left:3px solid var(--clear);border-radius:6px;padding:14px 16px;margin-top:14px}
+  .aibox .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--clear);font-weight:500}
+  .aibox .head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .aibox h4{margin:8px 0 4px;font-size:14px}
+  .aibox .out{white-space:pre-wrap;font-size:13.5px;color:var(--slate);margin-top:6px}
+  .aierr{color:var(--err);font-size:13px;margin-top:12px}
+  .aibusy{color:var(--muted);font-size:13px;margin-top:12px}
+  /* rail */
+  .rail{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);margin-top:30px;padding-top:16px}
+  .rail strong{color:var(--slate)}
+  @media (max-width:680px){
+    .grid{grid-template-columns:1fr}
+    .det{grid-template-columns:1fr}
+    h1{font-size:24px}
+    th.hide,td.hide{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  /* print: a clean governance record (hide controls, keep the register + detail) */
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    .no-print{display:none!important}
+    .panel{border:none;padding:0;margin:0 0 18px;break-inside:avoid}
+    .draftbox,.aibox{break-inside:avoid}
+    a{color:#000;text-decoration:underline}
+    .det .basis a::after{content:" (" attr(href) ")";font-size:10px;color:#444}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
