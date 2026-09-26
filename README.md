@@ -2,14 +2,14 @@
 
 A self-contained prototype that helps an organisation **register each use of AI, classify the risk against UK data-protection law and the EU AI Act, and produce draft governance documents** — while being honest about what it does not know. Where a question is genuinely unsettled, it flags it for human review instead of inventing a confident answer. Every legal basis is **cited and linked to an official source**, and the law is stated **as at a fixed date** so a reader can check currency.
 
-> \*\*Personal proof-of-concept, built through AI-assisted development.\*\* A working interface that demonstrates applied AI-governance and UK-data-protection thinking. It is a prototype, not a production system, and it \*\*does not give legal advice or make legal determinations\*\*.
+> **Personal proof-of-concept, built through AI-assisted development.** A working interface that demonstrates applied AI-governance and UK-data-protection thinking. It is a prototype, not a production system, and it **does not give legal advice or make legal determinations**.
 
-**Law as at: 25 June 2026 — verify before reliance.**
+**Law as at: 22 June 2026 — verify before reliance.**
 
 ## What it does
 
 * **Intake** — capture each AI use and a few governance-relevant facts (personal data, special-category data, decisions about people, solely-automated decisions, account type, EU reach).
-* **Rules engine** — classify the use, attach a **confidence level** (settled / probable / unsettled) and a **cited legal basis** to each point, and link that basis to the official source.
+* **Rules engine** — classify the use, attach a **confidence level** (clear / likely / unsettled → human review) and a **cited legal basis** to each point, and link that basis to the official source.
 * **Escalation** — genuinely unsettled questions resolve to *“Unsettled → human review,”* not a false certainty.
 * **Draft outputs** — a draft DPIA summary, policy points and recommended actions, each clearly labelled a draft for a human to check.
 * **Defensibility register** — track every system along a ladder: Identified → Assessed → Documented → Review-ready.
@@ -28,7 +28,7 @@ Each determination cites a provision and links to an official source. Positions 
 * **DPIA** — UK GDPR **Art. 35**; a DPIA is required for processing likely to result in high risk. ICO guidance is under review following the Data (Use and Access) Act 2025, but the criteria that *trigger* a DPIA are unchanged. ([ICO — when do we need a DPIA?](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/))
 * **Automated decision-making** — the **Data (Use and Access) Act 2025, s.80 repealed Art. 22 UK GDPR and replaced it with Arts. 22A–22D**, in force **5 February 2026**. Significant, solely-automated decisions on **non-special-category** data are now permitted subject to the **Art. 22C safeguards** (information, representations, human intervention, the right to contest); decisions on **special-category** data remain restricted under **Art. 22B**. ([DUAA 2025, s.80 — legislation.gov.uk](https://www.legislation.gov.uk/ukpga/2025/18/section/80) · [ICO — DUAA overview](https://ico.org.uk/about-the-ico/what-we-do/legislation-we-cover/data-use-and-access-act-2025/the-data-use-and-access-act-2025-what-does-it-mean-for-organisations/))
 * **EU AI Act high-risk** — Annex III obligations were originally set for **2 August 2026**. The **Digital Omnibus** (provisional agreement **7 May 2026**) would defer Annex III to **2 December 2027** and Annex I to **2 August 2028**, but it is **not yet adopted or published in the Official Journal**, so the 2 August 2026 date remains live until then. The tool therefore treats high-risk classification and timing as **unsettled**. ([European Commission — Digital Omnibus on AI](https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal) · [AI Act framework](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai))
-* **AI literacy** — EU AI Act **Art. 4**; in force since **2 February 2025** for all providers and deployers, regardless of risk tier. ([European Commission — AI literacy Q\&A](https://digital-strategy.ec.europa.eu/en/faqs/ai-literacy-questions-answers))
+* **AI literacy** — EU AI Act **Art. 4**; in force since **2 February 2025** for all providers and deployers, regardless of risk tier. ([European Commission — AI literacy Q&A](https://digital-strategy.ec.europa.eu/en/faqs/ai-literacy-questions-answers))
 
 ## How it works
 
@@ -43,7 +43,7 @@ A note on the build: the JSX is pre-compiled to plain JavaScript (`app.js`) and 
 
 The tool is fully usable without this. If you supply an Anthropic API key, an optional assistant can (1) **explain a single flag** in plainer English and (2) **draft a short governance note** from the findings. It is deliberately constrained:
 
-* **Scope-locked, not open Q\&A.** There is no free-text question box. The model is only ever sent the engine's structured findings for the selected system, and is instructed to add no new legal claims, citations or obligations, to preserve the engine's "unsettled → human review" escalations, and to label everything a draft, not advice. The deterministic engine stays the source of truth; the model is a drafting aid on top of it.
+* **Scope-locked, not open Q&A.** There is no free-text question box. The model is only ever sent the engine's structured findings for the selected system, and is instructed to add no new legal claims, citations or obligations, to preserve the engine's "unsettled → human review" escalations, and to label everything a draft, not advice. The deterministic engine stays the source of truth; the model is a drafting aid on top of it.
 * **Why this shape.** An open "ask any legal question" box on a public site would invite confidently-wrong, uncited legal answers under the author's name — the opposite of what this tool stands for — and would require exposing an API key in the frontend. A free-text mode was therefore deliberately *not* built.
 * **Key handling.** The key is held only in the browser tab's memory, sent solely to `https://api.anthropic.com/v1/messages`, and **never stored, written to disk, committed, or included in any export.** Closing the tab discards it. Browser calls use the `anthropic-dangerous-direct-browser-access` header — a bring-your-own-key pattern suitable for a personal demo, not a way to ship someone else's key.
 
@@ -86,5 +86,5 @@ MIT — see [LICENSE](LICENSE).
 
 ## About
 
-Built by **Mahmoud Hussein**, an Egypt-qualified lawyer (registered at Appeal level), through AI-assisted development — directing and assembling AI-generated code on a foundation of React and JavaScript, with the legal design, the rules logic and the source verification his own.
+Built by **[Mahmoud Hussein](https://legal-technology.uk)**, a lawyer qualified in Egypt (admitted to the Egyptian Bar and registered at Appeal level) and based in the UK, through AI-assisted development — directing and assembling AI-generated code on a foundation of React and JavaScript, with the legal design, the rules logic and the source verification his own.
 
