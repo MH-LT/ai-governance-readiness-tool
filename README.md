@@ -23,7 +23,7 @@ A self-contained prototype that helps an organisation **register each use of AI,
 
 ## Legal basis and currency
 
-Each determination cites a provision and links to an official source. Positions were **verified at source on 8 October 2026** (the note on the ICO's DPIA guidance on 22 June 2026); the law moves, so confirm the current position before relying on anything.
+Each determination cites a provision and links to an official source. Positions were **verified at source on 8 October 2026**; the law moves, so confirm the current position before relying on anything.
 
 * **DPIA** — UK GDPR **Art. 35**; a DPIA is required for processing likely to result in high risk. ICO guidance is under review following the Data (Use and Access) Act 2025, but the criteria that *trigger* a DPIA are unchanged. ([ICO — when do we need a DPIA?](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/))
 * **Automated decision-making** — the **Data (Use and Access) Act 2025, s.80 repealed Art. 22 UK GDPR and replaced it with Arts. 22A–22D**, in force **5 February 2026**. Significant, solely-automated decisions on **non-special-category** data are now permitted subject to the **Art. 22C safeguards** (information, representations, human intervention, the right to contest); decisions on **special-category** data remain restricted under **Art. 22B**. ([DUAA 2025, s.80 — legislation.gov.uk](https://www.legislation.gov.uk/ukpga/2025/18/section/80) · [ICO — DUAA overview](https://ico.org.uk/about-the-ico/what-we-do/legislation-we-cover/data-use-and-access-act-2025/the-data-use-and-access-act-2025-what-does-it-mean-for-organisations/))
