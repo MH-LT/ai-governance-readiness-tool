@@ -91,12 +91,25 @@ test("CURRENCY GUARD: ADM basis cites the post-DUAA articles, not repealed Art. 
   assert.doesNotMatch(adm.note, /\bprohibited\b/i);
 });
 
-test("CURRENCY GUARD: EU AI Act item is flagged as not-yet-adopted and gives both dates", () => {
+test("CURRENCY GUARD: EU AI Act item cites the adopted Omnibus and its fixed dates, and still escalates", () => {
   const a = assess(base({ affectsDecisions: "yes", euUsers: "yes" }));
   const item = a.determinations.find((d) => d.sourceKey === "aiact_highrisk");
-  assert.match(item.note, /not yet adopted/i);
+  // Regulation (EU) 2026/1744 is adopted and in force (27 July 2026): never "provisional" again.
+  assert.match(item.note, /2026\/1744/);
+  assert.doesNotMatch(item.note, /not yet adopted|provisional/i);
+  assert.doesNotMatch(SOURCES.aiact_highrisk.cite, /not yet adopted|provisional/i);
   assert.match(item.note, /2 December 2027/);
-  assert.match(item.note, /2 August 2026/);
+  assert.match(item.note, /2 August 2028/);
+  // Whether a use falls within Annex III is still for a person to decide.
+  assert.strictEqual(item.level, "unsettled");
+});
+
+test("CURRENCY GUARD: AI literacy states Art. 4 as replaced in 2026, not the original duty", () => {
+  const a = assess(base({}));
+  const item = a.determinations.find((d) => d.sourceKey === "ai_literacy");
+  assert.match(item.note, /2026\/1744/);
+  assert.match(item.note, /take measures to support/);
+  assert.match(SOURCES.ai_literacy.cite, /as replaced/);
 });
 
 test("every determination's source resolves and any URL is https", () => {

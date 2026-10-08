@@ -30,7 +30,7 @@
   "use strict";
 
   // The date on which the legal positions below were verified at source.
-  var LAW_AS_AT = "22 June 2026";
+  var LAW_AS_AT = "8 October 2026";
 
   var LADDER = ["Identified", "Assessed", "Documented", "Review-ready"];
 
@@ -52,12 +52,16 @@
       url: "https://www.legislation.gov.uk/ukpga/2025/18/section/80",
     },
     aiact_highrisk: {
-      cite: "EU AI Act, Annex III (high-risk) — timing subject to the Digital Omnibus (provisional, not yet adopted)",
-      url: "https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal",
+      // The Digital Omnibus on AI, Regulation (EU) 2026/1744 of 8 July 2026 (OJ 24 July 2026,
+      // in force 27 July 2026), moved the high-risk application dates.
+      cite: "EU AI Act, Annex III (high-risk); applies from 2 Dec 2027 (Regulation (EU) 2026/1744)",
+      url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng",
     },
     ai_literacy: {
-      cite: "EU AI Act, Art. 4 (AI literacy; in force 2 Feb 2025)",
-      url: "https://digital-strategy.ec.europa.eu/en/faqs/ai-literacy-questions-answers",
+      // Art. 4 as replaced by Regulation (EU) 2026/1744: a duty to take measures that support
+      // AI literacy, with no specific level required. The original duty applied from 2 Feb 2025.
+      cite: "EU AI Act, Art. 4 (AI literacy), as replaced by Regulation (EU) 2026/1744; in force 27 Jul 2026",
+      url: "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng",
     },
     shadow: {
       cite: "Internal governance / acceptable-use policy",
@@ -138,7 +142,8 @@
       }
     }
 
-    // EU AI Act high-risk — genuinely unsettled as at LAW_AS_AT.
+    // EU AI Act high-risk — whether a use falls within Annex III is a question for human
+    // review; the dates are fixed by Regulation (EU) 2026/1744.
     if (s.affectsDecisions === "yes" && s.euUsers === "yes") {
       d.push(
         Object.assign(
@@ -146,11 +151,11 @@
           source(
             "aiact_highrisk",
             "Decisions about people affecting individuals in the EU may fall within an Annex III high-risk " +
-              "category (for example, employment or access to services). Classification and timing are currently " +
-              "unsettled: the Digital Omnibus (provisional agreement 7 May 2026) would defer Annex III high-risk " +
-              "obligations from 2 August 2026 to 2 December 2027, but it is not yet adopted or published in the " +
-              "Official Journal, so the 2 August 2026 date remains live until then. Refer for human / legal review " +
-              "rather than relying on a single date."
+              "category (for example, employment or access to services). Whether this use does is a question of " +
+              "classification: refer it for human / legal review. The timing is now fixed: the Digital Omnibus, " +
+              "Regulation (EU) 2026/1744 (in force 27 July 2026), moved the Annex III high-risk obligations from " +
+              "2 August 2026 to 2 December 2027, and those for high-risk AI in products covered by Annex I to " +
+              "2 August 2028."
           )
         )
       );
@@ -169,15 +174,17 @@
       );
     }
 
-    // AI literacy applies to all providers/deployers — a settled obligation.
+    // AI literacy applies to all providers/deployers — a settled obligation, softened in 2026.
     d.push(
       Object.assign(
         { level: "clear", label: "AI literacy & acceptable-use policy" },
         source(
           "ai_literacy",
-          "The EU AI Act Art. 4 AI-literacy obligation has applied to all providers and deployers since " +
-            "2 February 2025, regardless of risk tier. Provide AI-literacy guidance and an acceptable-use policy " +
-            "for everyone who relies on the system's output."
+          "Under EU AI Act Art. 4, as replaced by Regulation (EU) 2026/1744 (in force 27 July 2026), providers " +
+            "and deployers must take measures to support the development of AI literacy, whatever the risk tier; " +
+            "no specific level is required of any individual. (The original duty, to ensure a sufficient level, " +
+            "applied from 2 February 2025.) Provide AI-literacy guidance and an acceptable-use policy for " +
+            "everyone who relies on the system's output."
         )
       )
     );

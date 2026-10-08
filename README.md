@@ -4,7 +4,7 @@ A self-contained prototype that helps an organisation **register each use of AI,
 
 > **Personal proof-of-concept, built through AI-assisted development.** A working interface that demonstrates applied AI-governance and UK-data-protection thinking. It is a prototype, not a production system, and it **does not give legal advice or make legal determinations**.
 
-**Law as at: 22 June 2026 — verify before reliance.**
+**Law as at: 8 October 2026 — verify before reliance.**
 
 ## What it does
 
@@ -23,12 +23,12 @@ A self-contained prototype that helps an organisation **register each use of AI,
 
 ## Legal basis and currency
 
-Each determination cites a provision and links to an official source. Positions were **verified at source on 22 June 2026**; the law moves, so confirm the current position before relying on anything.
+Each determination cites a provision and links to an official source. Positions were **verified at source on 8 October 2026** (the note on the ICO's DPIA guidance on 22 June 2026); the law moves, so confirm the current position before relying on anything.
 
 * **DPIA** — UK GDPR **Art. 35**; a DPIA is required for processing likely to result in high risk. ICO guidance is under review following the Data (Use and Access) Act 2025, but the criteria that *trigger* a DPIA are unchanged. ([ICO — when do we need a DPIA?](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/))
 * **Automated decision-making** — the **Data (Use and Access) Act 2025, s.80 repealed Art. 22 UK GDPR and replaced it with Arts. 22A–22D**, in force **5 February 2026**. Significant, solely-automated decisions on **non-special-category** data are now permitted subject to the **Art. 22C safeguards** (information, representations, human intervention, the right to contest); decisions on **special-category** data remain restricted under **Art. 22B**. ([DUAA 2025, s.80 — legislation.gov.uk](https://www.legislation.gov.uk/ukpga/2025/18/section/80) · [ICO — DUAA overview](https://ico.org.uk/about-the-ico/what-we-do/legislation-we-cover/data-use-and-access-act-2025/the-data-use-and-access-act-2025-what-does-it-mean-for-organisations/))
-* **EU AI Act high-risk** — Annex III obligations were originally set for **2 August 2026**. The **Digital Omnibus** (provisional agreement **7 May 2026**) would defer Annex III to **2 December 2027** and Annex I to **2 August 2028**, but it is **not yet adopted or published in the Official Journal**, so the 2 August 2026 date remains live until then. The tool therefore treats high-risk classification and timing as **unsettled**. ([European Commission — Digital Omnibus on AI](https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal) · [AI Act framework](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai))
-* **AI literacy** — EU AI Act **Art. 4**; in force since **2 February 2025** for all providers and deployers, regardless of risk tier. ([European Commission — AI literacy Q&A](https://digital-strategy.ec.europa.eu/en/faqs/ai-literacy-questions-answers))
+* **EU AI Act high-risk** — the **Digital Omnibus on AI, Regulation (EU) 2026/1744** (8 July 2026; Official Journal 24 July 2026; in force **27 July 2026**), moved the Annex III high-risk obligations from 2 August 2026 to **2 December 2027**, and those for high-risk AI in products covered by Annex I to **2 August 2028**. The dates are settled; whether a particular use falls within an Annex III category is not something an intake form can decide, so the tool still marks it **unsettled** and refers it for human review. ([Regulation (EU) 2026/1744 — EUR-Lex](https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng) · [AI Act framework](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai))
+* **AI literacy** — EU AI Act **Art. 4**, **as replaced by Regulation (EU) 2026/1744**: providers and deployers must take measures to support the development of AI literacy, whatever the risk tier, with no specific level required of any individual. The original duty, to ensure a sufficient level, applied from **2 February 2025**. ([Regulation (EU) 2026/1744 — EUR-Lex](https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng))
 
 ## How it works
 
